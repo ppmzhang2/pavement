@@ -35,6 +35,24 @@ def main(db_path: str) -> None:
       TO 'data/l2_annot_pred_unlabeled.csv' (HEADER, DELIMITER '\t');
     """)
 
+    con.execute("""
+    COPY (SELECT * FROM l5_feat_wkt WHERE labeled = 0)
+      TO 'data/l5_feat_wkt_pred_unlabeled.csv' (HEADER, DELIMITER '\t');
+    """)
+    con.execute("""
+    COPY (SELECT * FROM l5_feat_wkt WHERE labeled = 1)
+      TO 'data/l5_feat_wkt_pred_labeled.csv' (HEADER, DELIMITER '\t');
+    """)
+
+    con.execute("""
+    COPY (SELECT * FROM l5_img_wkt WHERE labeled = 0)
+      TO 'data/l5_img_wkt_pred_unlabeled.csv' (HEADER, DELIMITER '\t');
+    """)
+    con.execute("""
+    COPY (SELECT * FROM l5_img_wkt WHERE labeled = 1)
+      TO 'data/l5_img_wkt_pred_labeled.csv' (HEADER, DELIMITER '\t');
+    """)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

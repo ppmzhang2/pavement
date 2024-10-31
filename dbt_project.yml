@@ -81,3 +81,28 @@ seeds:
         score_top2: float
         label_top1: int
         label_top2: int
+    l0_2023_exif:
+      +delimiter: "\t"
+      +quote_columns: false
+      +column_types:
+        prefix: varchar(255)
+        image: varchar(64)
+        height: int
+        width: int
+        altitude: float8
+        timestamp: text
+        latitude: float8
+        longitude: float8
+        easting: float8
+        northing: float8
+    l0_2023_map_image_feature:
+      +delimiter: ","
+      +quote_columns: false
+      +column_types:
+        prefix: varchar(255)
+        image: varchar(64)
+        feature_id: text
+        distance: float8
+    l0_2023_feat:
+      +delimiter: "\t"
+      +quote_columns: false
