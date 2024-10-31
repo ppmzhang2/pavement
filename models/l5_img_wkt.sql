@@ -1,6 +1,6 @@
 {{ config(materialized='table') }}
 
-SELECT fct.labeled
+SELECT fct.batch
      , fct.prefix
      , fct.image
      , fct.fault_image
@@ -15,8 +15,8 @@ SELECT fct.labeled
      , fea.ratio
      , fct.wkt
      , fct.distance
-  FROM {{ ref('l4_img_feat_annot_pred') }} AS fct
+  FROM {{ ref('l4_img_feat_annot') }} AS fct
  INNER
   JOIN {{ ref('l4_feat_score') }} AS fea
-    ON fct.labeled = fea.labeled
+    ON fct.batch = fea.batch
    AND fct.feature_id = fea.feature_id

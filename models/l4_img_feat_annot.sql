@@ -1,6 +1,6 @@
 {{ config(materialized='table') }}
 
-SELECT lab.labeled
+SELECT lab.batch
      , lab.prefix
      , lab.image
      , lab.fault_image
@@ -32,7 +32,7 @@ SELECT lab.labeled
      , lab.pothole_fair
      , lab.pothole_poor
      , lab.pothole_verypoor
-  FROM {{ ref('l4_img_annot_pred') }} AS lab
+  FROM {{ ref('l4_img_annot') }} AS lab
  INNER
   JOIN {{ ref('l0_2023_map_image_feature') }} AS bri
     ON lab.prefix = bri.prefix

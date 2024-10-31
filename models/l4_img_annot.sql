@@ -1,9 +1,9 @@
 {{ config(materialized='table') }}
 
 WITH lbl AS (
-    SELECT labeled
+    SELECT batch
          , prefix
-      FROM {{ ref('l3_annot_pred_cnt') }}
+      FROM {{ ref('l3_annot_cnt') }}
      GROUP BY 1, 2
 ), tmp AS (
     SELECT *
@@ -42,9 +42,9 @@ WITH lbl AS (
                 WHEN pothole_fair > 0 THEN 'pothole_fair_'
                 ELSE ''
             END AS pothole_status
-      FROM {{ ref('l3_annot_pred_cnt') }}
+      FROM {{ ref('l3_annot_cnt') }}
 ), img AS (
-    SELECT lbl.labeled
+    SELECT lbl.batch
          , rhs.prefix
          , rhs.image
          , rhs.latitude
@@ -56,12 +56,16 @@ WITH lbl AS (
       JOIN lbl
         ON rhs.prefix = lbl.prefix
 ), ann AS (
-    SELECT labeled
+    SELECT batch
          , prefix
          , image
-         , bump_status || crack_status || depression_status ||
-           displacement_status || vegetation_status || uneven_status ||
-           pothole_status || image AS fault_image
+         , bump_status ||
+           crack_status ||
+           depression_status ||
+           displacement_status ||
+           pothole_status ||
+           uneven_status ||
+           vegetation_status || image AS fault_image
          , bump_fair
          , bump_poor
          , bump_verypoor
@@ -85,7 +89,7 @@ WITH lbl AS (
          , pothole_verypoor
       FROM tmp
 )
-SELECT img.labeled
+SELECT img.batch
      , img.prefix
      , img.image
      , img.latitude
@@ -117,6 +121,6 @@ SELECT img.labeled
   FROM img
   LEFT
   JOIN ann
-    ON img.labeled = ann.labeled
+    ON img.batch = ann.batch
    AND img.prefix = ann.prefix
    AND img.image = ann.image

@@ -1,6 +1,6 @@
 {{ config(materialized='table') }}
 
-SELECT sco.labeled
+SELECT sco.batch
      , sco.feature_id
      , sco.feature_seq
      , sco.cnt_img_feature

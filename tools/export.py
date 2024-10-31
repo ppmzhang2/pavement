@@ -18,7 +18,7 @@ def main(db_path: str) -> None:
                , category
                , level
             FROM l2_annot_pred
-           WHERE labeled = 1)
+           WHERE batch = 1)
       TO 'data/l2_annot_pred_labeled.csv' (HEADER, DELIMITER '\t');
     """)
     con.execute("""
@@ -31,26 +31,34 @@ def main(db_path: str) -> None:
                , category
                , level
             FROM l2_annot_pred
-           WHERE labeled = 0)
+           WHERE batch = 0)
       TO 'data/l2_annot_pred_unlabeled.csv' (HEADER, DELIMITER '\t');
     """)
 
     con.execute("""
-    COPY (SELECT * FROM l5_feat_wkt WHERE labeled = 0)
+    COPY (SELECT * FROM l5_feat_wkt WHERE batch = 0)
       TO 'data/l5_feat_wkt_pred_unlabeled.csv' (HEADER, DELIMITER '\t');
     """)
     con.execute("""
-    COPY (SELECT * FROM l5_feat_wkt WHERE labeled = 1)
+    COPY (SELECT * FROM l5_feat_wkt WHERE batch = 1)
       TO 'data/l5_feat_wkt_pred_labeled.csv' (HEADER, DELIMITER '\t');
+    """)
+    con.execute("""
+    COPY (SELECT * FROM l5_feat_wkt WHERE batch = 2)
+      TO 'data/l5_feat_wkt_gt.csv' (HEADER, DELIMITER '\t');
     """)
 
     con.execute("""
-    COPY (SELECT * FROM l5_img_wkt WHERE labeled = 0)
+    COPY (SELECT * FROM l5_img_wkt WHERE batch = 0)
       TO 'data/l5_img_wkt_pred_unlabeled.csv' (HEADER, DELIMITER '\t');
     """)
     con.execute("""
-    COPY (SELECT * FROM l5_img_wkt WHERE labeled = 1)
+    COPY (SELECT * FROM l5_img_wkt WHERE batch = 1)
       TO 'data/l5_img_wkt_pred_labeled.csv' (HEADER, DELIMITER '\t');
+    """)
+    con.execute("""
+    COPY (SELECT * FROM l5_img_wkt WHERE batch = 2)
+      TO 'data/l5_img_wkt_gt.csv' (HEADER, DELIMITER '\t');
     """)
 
 

@@ -8,8 +8,9 @@ models:
         data_type: TINYINT
         data_tests:
           - not_null
-      - name: labeled
+      - name: batch
         data_type: TINYINT
+        description: "0 for prediction on unlabeled; 1 for labeled; 2 for GT"
         data_tests:
           - not_null
       - name: prefix

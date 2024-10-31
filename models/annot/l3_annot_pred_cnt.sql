@@ -1,6 +1,4 @@
-{{ config(materialized='table') }}
-
-SELECT labeled
+SELECT batch
      , prefix
      , image
      , sum(CASE WHEN category = 'bump'

@@ -1,7 +1,7 @@
 {{ config(materialized='table') }}
 
 SELECT 1                                          AS category
-     , 1                                          AS labeled
+     , 1                                          AS batch
      , REGEXP_EXTRACT(image, '_h\d+_(\d+)_', 1)   AS prefix
      , REGEXP_EXTRACT(image, '_\d+_(\w+\..+)', 1) AS image
      , REGEXP_EXTRACT(image, '_y(\d+)_', 1)       AS y
@@ -16,7 +16,7 @@ SELECT 1                                          AS category
   FROM {{ ref('l0_annot_pred_labeled_cls_category') }}
  UNION ALL
 SELECT 0                                          AS category
-     , 1                                          AS labeled
+     , 1                                          AS batch
      , REGEXP_EXTRACT(image, '_h\d+_(\d+)_', 1)   AS prefix
      , REGEXP_EXTRACT(image, '_\d+_(\w+\..+)', 1) AS image
      , REGEXP_EXTRACT(image, '_y(\d+)_', 1)       AS y
@@ -31,7 +31,7 @@ SELECT 0                                          AS category
   FROM {{ ref('l0_annot_pred_labeled_cls_severity') }}
  UNION ALL
 SELECT 1                                          AS category
-     , 0                                          AS labeled
+     , 0                                          AS batch
      , REGEXP_EXTRACT(image, '_h\d+_(\d+)_', 1)   AS prefix
      , REGEXP_EXTRACT(image, '_\d+_(\w+\..+)', 1) AS image
      , REGEXP_EXTRACT(image, '_y(\d+)_', 1)       AS y
@@ -46,7 +46,7 @@ SELECT 1                                          AS category
   FROM {{ ref('l0_annot_pred_unlabeled_cls_category') }}
  UNION ALL
 SELECT 0                                          AS category
-     , 0                                          AS labeled
+     , 0                                          AS batch
      , REGEXP_EXTRACT(image, '_h\d+_(\d+)_', 1)   AS prefix
      , REGEXP_EXTRACT(image, '_\d+_(\w+\..+)', 1) AS image
      , REGEXP_EXTRACT(image, '_y(\d+)_', 1)       AS y

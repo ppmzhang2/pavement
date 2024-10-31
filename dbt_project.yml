@@ -37,6 +37,10 @@ models:
 
 seeds:
   pavement:
+    l0_annot_gt_cnt:
+      +schema: annot
+      +delimiter: ","
+      +quote_columns: false
     l0_annot_pred_labeled_cls_category:
       +schema: annot
       +delimiter: "\t"

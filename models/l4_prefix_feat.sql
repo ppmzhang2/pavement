@@ -1,6 +1,6 @@
 {{ config(materialized='table') }}
 
-SELECT labeled
+SELECT batch
      , prefix
      , feature_id
      , count(1)                        AS cnt_img_feature
@@ -25,5 +25,5 @@ SELECT labeled
      , sum(pothole_fair)               AS pothole_fair
      , sum(pothole_poor)               AS pothole_poor
      , sum(pothole_verypoor)           AS pothole_verypoor
-  FROM {{ ref('l4_img_feat_annot_pred') }}
+  FROM {{ ref('l4_img_feat_annot') }}
  GROUP BY 1, 2, 3

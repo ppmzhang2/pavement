@@ -1,16 +1,16 @@
 WITH unk AS (
-    SELECT labeled
+    SELECT batch
          , feature_id
-      FROM {{ ref('l4_img_feat_annot_pred') }}
+      FROM {{ ref('l4_img_feat_annot') }}
      GROUP BY 1, 2
 ), ids AS (
-    SELECT labeled
+    SELECT batch
          , feature_id
-         , ROW_NUMBER() OVER (PARTITION BY labeled
+         , ROW_NUMBER() OVER (PARTITION BY batch
                                   ORDER BY feature_id) AS feature_seq
       FROM unk
 ), tmp AS (
-    SELECT labeled
+    SELECT batch
          , feature_id
          , sum(cnt_img_feature)       AS cnt_img_feature
          , sum(bump_fair)             AS bump_fair
@@ -61,7 +61,7 @@ WITH unk AS (
           , pothole_verypoor / cnt_img_feature      AS pothole_vpoor_r
        FROM tmp
 )
-SELECT ids.labeled
+SELECT ids.batch
      , ids.feature_id
      , ids.feature_seq
      , cte.cnt_img_feature
@@ -145,5 +145,5 @@ SELECT ids.labeled
   FROM ids
  INNER
   JOIN cte
-    ON ids.labeled = cte.labeled
+    ON ids.batch = cte.batch
    AND ids.feature_id = cte.feature_id

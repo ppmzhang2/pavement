@@ -1,7 +1,7 @@
 {{ config(materialized='table') }}
 
 WITH category AS (
-    SELECT labeled
+    SELECT batch
          , prefix
          , image
          , x
@@ -16,7 +16,7 @@ WITH category AS (
       FROM {{ ref('l1_annot_pred_cls') }}
      WHERE category = 1
 ), severity AS (
-    SELECT labeled
+    SELECT batch
          , prefix
          , image
          , x
@@ -41,7 +41,7 @@ WITH category AS (
       FROM severity
      GROUP BY 1, 2
 )
-SELECT cat.labeled
+SELECT cat.batch
      , cat.prefix
      , cat.image
      , cat.x
@@ -59,7 +59,7 @@ SELECT cat.labeled
   FROM category AS cat
  INNER
   JOIN severity AS lvl
-    ON cat.labeled = lvl.labeled
+    ON cat.batch = lvl.batch
    AND cat.prefix = lvl.prefix
    AND cat.image = lvl.image
    AND cat.x = lvl.x
