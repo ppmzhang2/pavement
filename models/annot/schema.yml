@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: l1_annot_pred_cls
+    description: "predicted classification annotation"
+    columns:
+      - name: category
+        data_type: TINYINT
+        data_tests:
+          - not_null
+      - name: batch
+        data_type: TINYINT
+        description: "0 for prediction on unlabeled; 1 for labeled; 2 for GT"
+        data_tests:
+          - not_null
+      - name: prefix
+        data_type: varchar(255)
+        data_tests:
+          - not_null
+      - name: image
+        data_type: varchar(64)
+        data_tests:
+          - not_null
+      - name: y
+        data_type: int
+        data_tests:
+          - not_null
+      - name: x
+        data_type: int
+        data_tests:
+          - not_null
+      - name: h
+        data_type: int
+        data_tests:
+          - not_null
+      - name: w
+        data_type: int
+        data_tests:
+          - not_null
+      - name: class
+        data_type: varchar(64)
+        data_tests:
+          - not_null
+      - name: label_top1
+        data_type: varchar(64)
+        data_tests:
+          - not_null
+      - name: score_top1
+        data_type: float
+        data_tests:
+          - not_null
+      - name: label_top2
+        data_type: varchar(64)
+        data_tests:
+          - not_null
+      - name: score_top2
+        data_type: float
+        data_tests:
+          - not_null

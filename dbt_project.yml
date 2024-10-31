@@ -31,6 +31,82 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   pavement:
-    # Config indicated by + and applies to all files under models/example/
-    example:
+    # Config indicated by + and applies to all files under models/annot
+    annot:
       +materialized: view
+
+seeds:
+  pavement:
+    l0_annot_gt_cnt:
+      +schema: annot
+      +delimiter: ","
+      +quote_columns: false
+    l0_annot_pred_labeled_cls_category:
+      +schema: annot
+      +delimiter: "\t"
+      +quote_columns: false
+      +column_types:
+        image: varchar(255)
+        class: varchar(32)
+        score_top1: float
+        score_top2: float
+        label_top1: int
+        label_top2: int
+    l0_annot_pred_labeled_cls_severity:
+      +schema: annot
+      +delimiter: "\t"
+      +quote_columns: false
+      +column_types:
+        image: varchar(255)
+        class: varchar(32)
+        score_top1: float
+        score_top2: float
+        label_top1: int
+        label_top2: int
+    l0_annot_pred_unlabeled_cls_category:
+      +schema: annot
+      +delimiter: "\t"
+      +quote_columns: false
+      +column_types:
+        image: varchar(255)
+        class: varchar(32)
+        score_top1: float
+        score_top2: float
+        label_top1: int
+        label_top2: int
+    l0_annot_pred_unlabeled_cls_severity:
+      +schema: annot
+      +delimiter: "\t"
+      +quote_columns: false
+      +column_types:
+        image: varchar(255)
+        class: varchar(32)
+        score_top1: float
+        score_top2: float
+        label_top1: int
+        label_top2: int
+    l0_2023_exif:
+      +delimiter: "\t"
+      +quote_columns: false
+      +column_types:
+        prefix: varchar(255)
+        image: varchar(64)
+        height: int
+        width: int
+        altitude: float8
+        timestamp: text
+        latitude: float8
+        longitude: float8
+        easting: float8
+        northing: float8
+    l0_2023_map_image_feature:
+      +delimiter: ","
+      +quote_columns: false
+      +column_types:
+        prefix: varchar(255)
+        image: varchar(64)
+        feature_id: text
+        distance: float8
+    l0_2023_feat:
+      +delimiter: "\t"
+      +quote_columns: false
